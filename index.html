@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Operantix Insights</title>
+</head>
+
+<body style="font-family:Arial; margin:40px;">
+
+<h1>Operantix Insights</h1>
+<p>Tech | SRE | Operations</p>
+
+<h2>Latest Posts</h2>
+<ul id="posts"></ul>
+
+<script>
+fetch("https://api.github.com/repos/sekaranarumugam/operantixinsights/contents/content/blog")
+  .then(res => res.json())
+  .then(data => {
+    const posts = document.getElementById("posts");
+
+    data.forEach(file => {
+      const li = document.createElement("li");
+
+      const link = document.createElement("a");
+      link.href = file.html_url;
+      link.target = "_blank";
+
+      // clean file name
+      link.innerText = file.name.replace(".md", "").replace(/-/g, " ");
+
+      li.appendChild(link);
+      posts.appendChild(li);
+    });
+  })
+  .catch(err => {
+    document.getElementById("posts").innerHTML = "No posts available";
+  });
+</script>
+
+<br><br>
+<a href="/admin/">Admin Login</a>
+
+</body>
+</html>
