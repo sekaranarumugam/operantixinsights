@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sekaran Arumugam | Operantix Insights</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, Arial;
+      margin: 0;
+      background: #f7f9fc;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: #0a192f;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    header p {
+      margin-top: 10px;
+      color: #cbd5e1;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      margin-top: 30px;
+      background: white;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #0a192f;
+    }
+
+    ul {
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+
+    .metrics {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .metric h3 {
+      margin: 0;
+      color: #0a192f;
+    }
+
+    .post-card {
+      background: white;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .post-card a {
+      text-decoration: none;
+      color: #0a192f;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .admin {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .admin a {
+      text-decoration: none;
+      color: white;
+      background: #0a192f;
+      padding: 10px 20px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sekaran Arumugam</h1>
+  <p>Production Support & SRE Leader | Payments & Scalable Systems</p>
+</header>
+
+<div class="container">
+
+  <div class="section">
+    <h2>About Me</h2>
+    <p>
+      Production Support and Site Reliability Engineering leader with over 17+ years of experience driving operational excellence for mission-critical systems, consistently delivering 99.99% uptime across payments and enterprise platforms. Known for building high-performing teams, transforming operational maturity, and implementing scalable reliability practices. Passionate about technology and knowledge sharing, I actively publish insights, real-world learnings, and best practices through Operantix Insights to help professionals design resilient and high-performing systems.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Impact</h2>
+    <div class="metrics">
+      <div class="metric">
+        <h3>17+ Years</h3>
+        <p>Experience</p>
+      </div>
+      <div class="metric">
+        <h3>99.99%</h3>
+        <p>System Uptime</p>
+      </div>
+      <div class="metric">
+        <h3>Global</h3>
+        <p>Enterprise Systems</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Key Skills</h2>
+    <ul>
+      <li>Site Reliability Engineering (SRE)</li>
+      <li>Production Support Strategy</li>
+      <li>Incident / Problem Management</li>
+      <li>Observability & Monitoring</li>
+      <li>Automation & Stability Engineering</li>
+      <li>Payments Systems (Mastercard / Visa)</li>
+      <li>SLA / SLO / Error Budget</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Latest Articles</h2>
+    <div id="posts">Loading...</div>
+  </div>
+
+  <div class="section">
+    <h2>Contact</h2>
+    <p>Email: sekaranarumugam05@gmail.com</p>
+  </div>
+
+  <div class="admin">
+    <a href="./admin/">Admin Login</a>
+  </div>
+
+</div>
+
+<script>
+fetch("https://api.github.com/repos/sekaranarumugam/operantixinsights/contents/content/blog")
+  .then(res => res.json())
+  .then(data => {
+
+    const container = document.getElementById("posts");
+
+    if (!Array.isArray(data)) {
+      container.innerHTML = "No posts available";
+      return;
+    }
+
+    container.innerHTML = "";
+
+    data.slice().reverse().forEach(file => {
+      const div = document.createElement("div");
+      div.className = "post-card";
+
+      let title = file.name
+        .replace(".md", "")
+        .replace(/-/g, " ")
+        .replace(/['"]/g, ""); // ✅ removes quotes
+
+      div.innerHTML = `
+        <a href="./post.html?file=${file.download_url}">${title}</a>
+      `;
+
+      container.appendChild(div);
+    });
+
+  })
+  .catch(() => {
+    document.getElementById("posts").innerHTML = "Unable to load articles";
+  });
+</script>
+
+</body>
+</html>
