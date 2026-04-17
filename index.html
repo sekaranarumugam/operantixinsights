@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Operantix Insights</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, Arial;
+      margin: 0;
+      background: #f7f9fc;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: #0a192f;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #cbd5e1;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .post-card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
+
+    .post-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .post-card a {
+      text-decoration: none;
+      color: #0a192f;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .post-card small {
+      display: block;
+      margin-top: 8px;
+      color: gray;
+    }
+
+    .admin {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .admin a {
+      text-decoration: none;
+      color: white;
+      background: #0a192f;
+      padding: 10px 20px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Operantix Insights</h1>
+  <p>SRE • Production Engineering • Scalable Systems</p>
+</header>
+
+<div class="container">
+  <h2>Latest Articles</h2>
+  <div id="posts">Loading...</div>
+
+  <div class="admin">
+    <a href="/admin/">Admin Login</a>
+  </div>
+</div>
+
+<script>
+fetch("https://api.github.com/repos/sekaranarumugam/operantixinsights/contents/content/blog")
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("posts");
+    container.innerHTML = "";
+
+    data.reverse().forEach(file => {
+      const div = document.createElement("div");
+      div.className = "post-card";
+
+      const title = file.name
+        .replace(".md", "")
+        .replace(/-/g, " ");
+
+      div.innerHTML = `
+        <a href="/post.html?file=${file.download_url}">${title}</a>
+        <small>Click to read</small>
+      `;
+
+      container.appendChild(div);
+    });
+  })
+  .catch(() => {
+    document.getElementById("posts").innerHTML = "No posts yet";
+  });
+</script>
+
+</body>
+</html>
