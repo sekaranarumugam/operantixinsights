@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sekaran Arumugam | Operantix Insights</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, Arial;
+      margin: 0;
+      background: #f7f9fc;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: #0a192f;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      margin-top: 10px;
+      color: #cbd5e1;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      margin-top: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #0a192f;
+    }
+
+    .post-card {
+      background: white;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
+
+    .post-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .post-card a {
+      text-decoration: none;
+      color: #0a192f;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .admin {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .admin a {
+      text-decoration: none;
+      color: white;
+      background: #0a192f;
+      padding: 10px 20px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sekaran Arumugam</h1>
+  <p>Production Support & SRE Leader | Payments Domain</p>
+</header>
+
+<div class="container">
+
+  <div class="section">
+    <h2>About Me</h2>
+    <p>
+      Seasoned Production Support and Site Reliability Engineering (SRE) leader with over 17+ years of experience managing mission-critical systems, ensuring 99.99% uptime, and driving operational excellence across payments and enterprise platforms. Passionate about technology and continuous learning, I actively share insights, real-world experiences, and best practices through technical writing. Through Operantix Insights, I aim to simplify complex production challenges and help professionals build reliable, scalable, and high-performing systems.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Skills</h2>
+    <p>SRE, Incident Management, Automation, Payments Systems, Team Leadership</p>
+  </div>
+
+  <div class="section">
+    <h2>Latest Articles</h2>
+    <div id="posts">Loading...</div>
+  </div>
+
+  <div class="section">
+    <h2>Contact</h2>
+    <p>Email: your@email.com</p>
+  </div>
+
+  <div class="admin">
+    <a href="./admin/">Admin Login</a>
+  </div>
+
+</div>
+
+<script>
+fetch("https://api.github.com/repos/sekaranarumugam/operantixinsights/contents/content/blog")
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("posts");
+    container.innerHTML = "";
+
+    data.reverse().forEach(file => {
+      const div = document.createElement("div");
+      div.className = "post-card";
+
+      const title = file.name
+        .replace(".md", "")
+        .replace(/-/g, " ");
+
+      div.innerHTML = `
+        <a href="./post.html?file=${file.download_url}">${title}</a>
+      `;
+
+      container.appendChild(div);
+    });
+  })
+  .catch(() => {
+    document.getElementById("posts").innerHTML = "No posts yet";
+  });
+</script>
+
+</body>
+</html>
